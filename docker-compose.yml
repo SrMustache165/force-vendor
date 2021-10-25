@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  force-vendor-core:
+    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: ${APP_NAME}
+    env_file: .env
+    volumes:
+      - ./:/var/www
+    ports:
+      - "${HTTP_PORT}:80"
+
+  force-vendor-db:
+    user: root
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: ${APP_NAME}-db
+    volumes:
+      - "./.dev/docker/.data:/var/opt/mssql"
+    ports:
+      - "${DB_PORT}:1433"
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${DB_PASSWORD}
+      MSSQL_PID: "Express"
+
+

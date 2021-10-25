@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap       = "vendor/autoload.php"
+         backupGlobals   ="false"
+         colors          = "true"
+         cacheResultFile ="./report/.phpunit.result.cache">
+
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage cacheDirectory="./report">
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+        <exclude>
+            <file>src/routes.php</file>
+        </exclude>
+
+        <report>
+            <html outputDirectory="report/html-coverage" lowUpperBound="50" highLowerBound="90"/>       
+            <xml outputDirectory="report/xml-coverage"/>
+        </report>
+    </coverage>
+
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <env name="ENVIRONMENT" value="TEST"/>
+    </php>
+
+</phpunit>
